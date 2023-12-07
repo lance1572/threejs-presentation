@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/lance-pres.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="../dist/assets/images/16_9@2x.png">
+					<div class="intro"><h1>Three.js</h1>
+						<p class="small-text">By Lance Nickel</p>
+						<p class="small-text">IGS 2023</p>
+					</div>
+					<svg class="three-logo" fill="none" stroke-linecap="square"
+						stroke-miterlimit="10" version="1.1" viewBox="0 0 226.77 226.77"
+						xmlns="http://www.w3.org/2000/svg" width="400">
+						<g transform="translate(8.964 4.2527)" fill-rule="evenodd" stroke="#000"
+							stroke-linecap="butt" stroke-linejoin="round" stroke-width="4">
+							<path d="m63.02 200.61-43.213-174.94 173.23 49.874z" />
+							<path d="m106.39 50.612 21.591 87.496-86.567-24.945z" />
+							<path d="m84.91 125.03-10.724-43.465 43.008 12.346z" />
+							<path d="m63.458 38.153 10.724 43.465-43.008-12.346z" />
+							<path d="m149.47 62.93 10.724 43.465-43.008-12.346z" />
+							<path d="m84.915 125.06 10.724 43.465-43.008-12.346z" />
+						</g>
+					</svg>
+				</section>
+
+				<section data-background-image="../dist/assets/images/16_9@2x.png">
+					<h1>What is Three.js</h1>
+					<p>Three.js is a cross-browser JavaScript library and API used to create
+						and display animated 3D computer graphics in a web browser using WebGL.
+						Three.js scripts may be used in conjunction with the HTML5 canvas element,
+						SVG or WebGL.</p>
+				</section>
+
+				<section data-background-image="../dist/assets/images/16_9@2x.png">
+					<h1 class>What is WebGL?</h1>
+					<p>WebGL is a low-level graphics API for rendering interactive 3D and 2D
+						graphics within any compatible web browser without the use of plug-ins. It
+						is based on OpenGL</p>
+				</section>
+
+				<section class="webgl-points"
+					data-background-image="../dist/assets/images/16_9@2x.png">
+					<h1>WebGL History</h1>
+					<p class="fragment fade-up">Evolved out Canvas 3D experiments at Mozilla</p>
+					<p class="fragment">A low-level graphics API to render graphics without
+						plugins in the browser</p>
+					<p class="fragment">Based off of OpenGL</p>
+					<p class="fragment">Uses the GPU</p>
+					<p class="fragment">Graphics can be mixed with other HTML elements on the
+						page</p>
+					<p class="fragment">Incredibly complex but incredibly fast</p>
+				</section>
+
+				<section data-background-image="../dist/assets/images/16_9@2x.png">
+					<h1>WebGL Pipeline</h1>
+					<p style="padding-top:0;margin-top:0; font-weight: bold;">To render
+						graphics with WebGL we have to follow specific steps.</p>
+
+					<section style="margin:0; padding:0;">
+
+						<p class="fragment fade-left">Javascript - Creating Data</p>
+						<ul style="padding-left: 1.5rem;">
+							<li class="fragment fade-in">Initialize WebGL</li>
+							<li class="fragment fade-in">Create Arrays</li>
+							<li class="fragment fade-in">Buffer Objects</li>
+							<li class="fragment fade-in">Shaders</li>
+							<li class="fragment fade-in">Attributes</li>
+							<li class="fragment fade-in">...</li>
+						</ul>
+					</section>
+					<section>
+						<p class="fragment fade-left">Vertex Shader</p>
+						<ul style="padding-left: 1.5rem;">
+							<li class="fragment fade-in">Vertex Shader is executed for each vertex
+								provided in the buffer object</li>
+							<li class="fragment fade-in">Calculates position of each vertex</li>
+							<li class="fragment fade-in">Calculates color, textures</li>
+						</ul>
+
+					</section>
+					<section>
+						<p class="fragment fade-left">Primitive Assembly</p>
+						<ul style="padding-left: 1.5rem;">
+							<li class="fragment fade-in">Triangles are created and passed to the
+								rasterizer</li>
+						</ul>
+
+					</section>
+
+					<section>
+						<p class="fragment fade-left">Rasterization (pixels are determined)</p>
+						<ul style="padding-left: 1.5rem;">
+							<li class="fragment fade-in">Culling - Orientation is determined and any
+								triangle not in the visible are discarded</li>
+							<li class="fragment fade-in">Clipping - Any triangles that are partly
+								outside of the view are removed</li>
+						</ul>
+					</section>
+
+					<section>
+						<p class="fragment fade-left">Fragment Shader</p>
+						<ul style="padding-left: 1.5rem;">
+							<li class="fragment fade-in">Data from the vertex shader in varying
+								variables</li>
+							<li class="fragment fade-in">Primitives from the rasterization stage, and
+								then</li>
+							<li class="fragment fade-in">Calculates the color values for each pixel
+								between the vertices</li>
+						</ul>
+					</section>
+
+					<section>
+						<p class="fragment fade-left">Testing Blending</p>
+						<ul style="padding-left: 1.5rem;">
+							<li class="fragment fade-in">Takes the fragment shader output and
+								combines it with colors in the current framebuffer to render
+								transparency and translucency effects.</li>
+						</ul>
+					</section>
+
+					<section>
+						<p class="fragment fade-left">Frame Buffer</p>
+						<ul style="padding-left: 1.5rem;">
+							<li class="fragment fade-in">The final color values are written to the
+								frame buffer</li>
+							<li class="fragment fade-in">Stores the frame of data in the GPU memory</li>
+							<li class="fragment fade-in">The data is then displayed on the screen</li>
+						</section>
+
+						<section>
+							<p class="fragment fade-in"><img src="dist/assets/images/pipleline.png"
+									alt></p>
+						</section>
+
+					</section>
+
+					<section data-background-image="../dist/assets/images/16_9@2x.png">
+						<h1>WebGL Example</h1>
+						<iframe height="300" style="width: 100%;" scrolling="no"
+							title="WebGL Example"
+							src="https://codepen.io/lnickel/embed/gOqZYva?default-tab=html%2Cresult&theme-id=47764"
+							frameborder="no" loading="lazy" allowtransparency="true"
+							allowfullscreen="true">
+							See the Pen <a href="https://codepen.io/lnickel/pen/gOqZYva">
+								WebGL Example</a> by lance (<a href="https://codepen.io/lnickel">@lnickel</a>)
+							on <a href="https://codepen.io">CodePen</a>.
+						</iframe>
+					</section>
+
+					<section class="webgl-points"
+						data-background-image="../dist/assets/images/16_9@2x.png">
+						<h1>Ugh too much code!!! 🤯</h1>
+						<p>While WebGL offers great performance it can be daunting to construct 3D
+							graphics. Imagine having to add lights, camera etc...</p>
+						<p><span style="border-bottom:1px solid black;">I wish there was something
+								out there to make it easier!</span></p>
+					</section>
+
+					<section class="webgl-points"
+						data-background-image="../dist/assets/images/16_9@2x.png">
+						<h1>Three.js</h1>
+						<p>Three.js is a cross-browser JavaScript library and API used to create
+							and display animated 3D computer graphics in a web browser using WebGL.
+							Three.js scripts may be used in conjunction with the HTML5 canvas
+							element, SVG or WebGL.</p>
+						<p>Three.js is often confused with WebGL since more often than not, but
+							not always, three.js uses WebGL to draw 3D</p>
+						<p class="fragment">Released by Ricardo Cabello on GitHub in April 2010</p>
+						<p class="fragment">Originally written in Actionscript then ported over to
+							Javascript</p>
+						<p class="fragment">It abstracts away complex code from WebGL</p>
+
+					</section>
+
+					<section>
+
+						<h1>Three.js Structure</h1>
+						<div style="display: flex;">
+							<div style="flex:1;">
+								<ul style="height:300px; overflow: auto; font-size: 0.9rem;">
+									<li class style="padding-bottom:1rem;padding-right:1rem;">
+										<span style="font-weight:bold;">The Renderer is the main object of
+											three.js.</span> You pass a
+										Scene and a Camera to a Renderer and it renders (draws) the portion of
+										the 3D scene that is inside the frustum of the camera as a 2D image to
+										a
+										canvas.
+									</li>
+
+									<li class style="padding-bottom:1rem;padding-right:1rem;">
+										There is a scenegraph. This is a tree-like structure of objects
+										consisting of various objects like a Scene object, multiple Mesh
+										objects, Light objects, Group, Object3D, and Camera objects
+										<br><br>
+										<span style="font-size:0.7rem;">Note in the diagram Camera is half in
+											half out of the scenegraph. This is to represent that in three.js,
+											unlike the other objects, a Camera does not have to be in the
+											scenegraph to function. Just like other objects, a Camera, as a child
+											of some other object, will move and orient relative to its parent
+											object. </span>
+
+									</li>
+
+									<li class style="padding-bottom:1rem;padding-right:1rem;">
+										Mesh objects represent drawing a specific Geometry with a specific
+										Material
+									</li>
+
+									<li class style="padding-bottom:1rem;padding-right:1rem;">
+										Geometry objects represent the vertex data of some piece of geometry
+										like a sphere, cube, plane, dog, cat, human, tree, building, etc...
+									</li>
+
+									<li class style="padding-bottom:1rem;padding-right:1rem;">Material
+										objects represent the surface properties used to draw geometry
+										including things like the color to use and how shiny it is.</li>
+
+									<li class style="padding-bottom:1rem;padding-right:1rem;">Texture
+										objects generally represent images either loaded from image files,
+										generated from a canvas or rendered from another scene.
+
+									</li>
+
+									<li class style="padding-bottom:1rem;">Light objects represent
+										different kinds of lights.</li>
+
+								</ul>
+							</div>
+							<div style="flex:1;">
+								<img src="../dist/assets/images/threejs-structure.svg" alt>
+							</div>
+						</div>
+					</section>
+
+					<section class="webgl-points"
+						data-background-image="../dist/assets/images/16_9@2x.png">
+						<h1>Three.js Benefits</h1>
+						<p class="fragment">Easy to Learn</p>
+						<p class="fragment">Vast Amount of Examples</p>
+						<p class="fragment">Large Community</p>
+						<p class="fragment">Good Documentation</p>
+						<p class="fragment">Great Performance</p>
+						<p class="fragment">Support for Most Popular Model Formats</p>
+					</section>
+
+					<section class="webgl-points"
+						data-background-image="../dist/assets/images/16_9@2x.png">
+						<h1>Three.js Disadvantages</h1>
+						<p class="fragment">A certain level of programming knowledge is needed</p>
+						<p class="fragment">Out of the box the docs are geared towards modern
+							frontend tools</p>
+						<p class="fragment">Can be overkill for simple animation needs</p>
+
+					</section>
+
+					<section class="three-example-code"
+						data-background-image="../dist/assets/images/16_9@2x.png">
+						<h1>Three.js Example</h1>
+						<section>
+							<p>index.html</p>
+							<pre><code data-trim data-escape data-line-numbers="7-15, 21">
+
+							&lt;!DOCTYPE html&gt;
+								&lt;html lang=&quot;en&quot;&gt;
+								&lt;head&gt;
+									&lt;meta charset=&quot;UTF-8&quot;&gt;
+									&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+									&lt;title&gt;Document&lt;/title&gt;
+									&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5.1/dat.gui.min.js&quot;&gt;&lt;/script&gt;
+									&lt;script type=&quot;importmap&quot;&gt;
+										{
+										&quot;imports&quot;: {
+											&quot;three&quot;: &quot;https://unpkg.com/three@0.159.0/build/three.module.js&quot;,
+											&quot;three/addons/&quot;: &quot;https://unpkg.com/three@0.159.0/examples/jsm/&quot;
+										}
+										}
+									&lt;/script&gt;
+									&lt;style&gt;
+										body { margin: 0; }
+									&lt;/style&gt;
+								&lt;/head&gt;
+								&lt;body&gt;
+									&lt;script type=&quot;module&quot; src=&quot;main.js&quot;&gt;&lt;/script&gt;
+								&lt;/body&gt;
+								&lt;/html&gt;
+								
+						</code></pre>
+						</section>
+
+						<section data-background-image="../dist/assets/images/16_9@2x.png">
+							<p>main.js</p>
+							<pre>
+						<code data-trim data-escape data-line-numbers="">
+
+									/* Import Three */
+									import * as THREE from 'three';
+
+
+									/* Create Scene and Camera */
+									const scene = new THREE.Scene();
+									const camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+									camera.position.z = 6;
+
+
+									/* Create Renderer */
+									const renderer = new THREE.WebGLRenderer({antialias: true});
+									renderer.shadowMap.enabled = true;
+									renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+
+									/* Set Size and Add Renderer to DOM */
+									renderer.setSize( window.innerWidth, window.innerHeight );
+									document.body.appendChild( renderer.domElement );
+
+
+									/* Create Cube */
+									const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+									const material = new THREE.MeshStandardMaterial( { color: 0xFFA500 } );
+									const cube = new THREE.Mesh( geometry, material );
+									cube.castShadow = true; //default is false
+									cube.receiveShadow = false; //default
+
+									/* Add Cube to Scene */
+									scene.add( cube );
+
+
+									/* Create Plane */
+									const plane_geo = new THREE.PlaneGeometry( 4, 4);
+									const plane_mat = new THREE.MeshStandardMaterial( {color: 0xfff332, side: THREE.DoubleSide} );
+									const plane = new THREE.Mesh( plane_geo, plane_mat );
+									plane.rotateX(Math.PI / 180 * -80);
+									plane.position.set(0, -1, 0);
+									plane.receiveShadow = true;
+
+									/* Add Plane to Scene */
+									scene.add( plane );
+
+
+									/* Create Directional Light */
+									const dir_light = new THREE.DirectionalLight(0xffffff, 5);
+									dir_light.position.set(1, 1, 1).normalize();
+									dir_light.castShadow = true; 
+									scene.add(dir_light);
+
+									/* Create Point Light */
+									const light = new THREE.PointLight( 0xFFA500);
+									light.position.set( 10, 0, 25 );
+									scene.add( light );
+
+
+
+									/* Set up shadow properties for the light */
+									dir_light.shadow.mapSize.width = 512; // default
+									dir_light.shadow.mapSize.height = 512; // default
+									dir_light.shadow.camera.near = 0.2; // default
+									dir_light.shadow.camera.far = 900; // default
+
+
+								
+									
+									renderer.physicallyCorrectLights = true;
+
+									/* Animate */
+									function animate() {
+										requestAnimationFrame( animate );
+
+										cube.rotation.x += 0.01;
+										cube.rotation.y += 0.01;
+
+										renderer.render( scene, camera );
+									}
+
+									animate();							
+						</code>
+				</pre>
+
+						</section>
+
+						<section data-background-image="../dist/assets/images/16_9@2x.png">
+
+							<p>Final</p>
+
+							<iframe data-src="./three.html" frameborder="0" width="100%"
+								height="350px" data-preload></iframe>
+
+						</section>
+
+					</section>
+
+					<section class="webgl-points">
+
+						<h1>Three.js in the Wild</h1>
+						<p><a href="https://threejs.org/" target="_blank">https://threejs.org/</a></p>
+						<p><a href="https://bruno-simon.com/" target="_blank">https://bruno-simon.com/</a></p>
+						<p><a href="https://cornrevolution.resn.global/" target="_blank">https://cornrevolution.resn.global/</a></p>
+						<p><a href="https://www.oculus.com/medal-of-honor/" target="_blank">https://www.oculus.com/medal-of-honor/</a></p>
+						<p><a href="https://eyes.nasa.gov/apps/solar-system/#/home"
+								target="_blank">https://eyes.nasa.gov/apps/solar-system/#/home</a>
+							<a href target="_blank"></a>
+
+						</section>
+
+						<section class="webgl-points">
+							<h1>Three.js Resources</h1>
+							<p class="fragment"><a href="https://discoverthreejs.com/"
+									target="_blank">https://discoverthreejs.com/</a></p>
+						</section>
+
+						<section>
+							<h1>Three.js Possibilities</h1>
+							<p>Three.js and D3 for Data Viz</p>
+
+							<section>
+								<p class="codepen" data-height="300" data-theme-id="47764"
+									data-default-tab="html,result" data-slug-hash="oNPZPYE"
+									data-user="prisoner849"
+									style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+									<span>See the Pen <a href="https://codepen.io/prisoner849/pen/oNPZPYE">
+											3D-Chart</a> by Paul (<a href="https://codepen.io/prisoner849">@prisoner849</a>)
+										on <a href="https://codepen.io">CodePen</a>.</span>
+								</p>
+								<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+							</section>
+
+							<section>
+								<p class="codepen" data-height="400" data-theme-id="47764"
+									data-default-tab="html,result" data-slug-hash="qJpLKd"
+									data-user="billdwhite"
+									style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+									<span>See the Pen <a href="https://codepen.io/billdwhite/pen/qJpLKd">
+											d3 3D Treemap</a> by Bill White (<a
+											href="https://codepen.io/billdwhite">@billdwhite</a>)
+										on <a href="https://codepen.io">CodePen</a>.</span>
+								</p>
+								<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+							</section>
+
+						</section>
+
+						<section>
+							<h1>The End! 👍 <span class="wave">👋</span></h1>
+						</section>
+
+					</div>
+				</div>
+
+				<script src="dist/reveal.js"></script>
+				<script src="plugin/notes/notes.js"></script>
+				<script src="plugin/markdown/markdown.js"></script>
+				<script src="plugin/highlight/highlight.js"></script>
+				<script src="node_modules/reveal.js-menu/menu.js"></script>
+				<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				center: true,
+				controlsLayout: 'bottom-right',
+		
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+			</body>
+		</html>
